@@ -896,7 +896,7 @@ a {
   padding: 3.2rem 4.4rem 1.25rem;
   border-radius: 0 0 16px 16px;
   background: linear-gradient(to top, rgba(13, 34, 56, 0.9) 10%, rgba(13, 34, 56, 0.35) 62%, rgba(13, 34, 56, 0));
-  color: var(--off);
+  color: var(--amber);
   opacity: 0;
 }
 
@@ -925,7 +925,7 @@ a {
 .stage-caption p {
   margin: 0;
   max-width: 52ch;
-  color: rgba(247, 248, 246, 0.9);
+  color: var(--amber);
 }
 
 .stage-caption span {
