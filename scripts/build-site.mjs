@@ -314,7 +314,7 @@ function page({ file, title, description, section, main, jsonLd = "" }) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${href(depth, "css/styles.css")}?v=2">
+    <link rel="stylesheet" href="${href(depth, "css/styles.css")}?v=9">
     ${jsonLd}
   </head>
   <body>
@@ -325,7 +325,7 @@ function page({ file, title, description, section, main, jsonLd = "" }) {
       ${main}
     </main>
     ${footer(depth)}
-    <script src="${href(depth, "js/site.js")}"></script>
+    <script src="${href(depth, "js/site.js")}?v=3"></script>
   </body>
 </html>
 `;
