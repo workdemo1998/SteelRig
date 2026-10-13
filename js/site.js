@@ -4,8 +4,18 @@
   const toggle = document.querySelector(".nav-toggle");
   const nav = document.querySelector(".nav");
 
+  function placeMenu() {
+    const bar = document.querySelector(".site-header");
+    if (!bar) return;
+    document.documentElement.style.setProperty(
+      "--menu-top",
+      Math.round(bar.getBoundingClientRect().bottom) + "px"
+    );
+  }
+
   function setMenu(open) {
     if (!nav || !toggle) return;
+    if (open) placeMenu();
     nav.classList.toggle("is-open", open);
     document.body.classList.toggle("nav-open", open);
     toggle.setAttribute("aria-expanded", open ? "true" : "false");
@@ -18,10 +28,25 @@
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape") setMenu(false);
     });
+    window.addEventListener("resize", function () {
+      if (document.body.classList.contains("nav-open")) placeMenu();
+    });
+    nav.addEventListener("click", function (event) {
+      if (event.target.closest("a")) setMenu(false);
+    });
   }
 
   const video = document.querySelector(".hero-media");
   if (video && reduceMotion) video.pause();
+
+  const header = document.querySelector(".site-header");
+  if (document.body.classList.contains("home") && header) {
+    const onScroll = function () {
+      header.classList.toggle("is-solid", window.scrollY > 24);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
 
   document.querySelectorAll("[data-town-toggle]").forEach(function (button) {
     const list = document.getElementById(button.getAttribute("aria-controls"));
