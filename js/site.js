@@ -37,7 +37,16 @@
   }
 
   const video = document.querySelector(".hero-media");
-  if (video && reduceMotion) video.pause();
+  if (video && reduceMotion) {
+    video.pause();
+  } else if (video) {
+    const start = function () {
+      const play = video.play();
+      if (play && play.catch) play.catch(function () {});
+    };
+    if (video.readyState >= 2) start();
+    else video.addEventListener("loadeddata", start, { once: true });
+  }
 
   const header = document.querySelector(".site-header");
   if (document.body.classList.contains("home") && header) {
@@ -150,62 +159,102 @@
   });
 
   document.querySelectorAll("[data-stage]").forEach(function (stage) {
+    const dataEl = document.getElementById("work-photos");
     let projects = [];
     try {
-      projects = JSON.parse(stage.getAttribute("data-projects"));
+      projects = JSON.parse(dataEl ? dataEl.textContent : "[]");
     } catch (error) {
       return;
     }
-    const sheets = Array.prototype.slice.call(stage.querySelectorAll(".stage-sheet"));
+    if (!projects.length) return;
+    const main = stage.querySelector(".stage-main");
+    const prevImg = stage.querySelector('[data-side="prev"]');
+    const nextImg = stage.querySelector('[data-side="next"]');
     const caption = stage.querySelector(".stage-caption");
-    const count = sheets.length;
     let index = 0;
 
     function render() {
+      const count = projects.length;
       const prev = (index - 1 + count) % count;
       const next = (index + 1) % count;
-      sheets.forEach(function (img, itemIndex) {
-        const slot = itemIndex === index ? "center" : itemIndex === prev ? "left" : "right";
-        img.setAttribute("data-slot", slot);
-        const front = slot === "center";
-        img.alt = front ? projects[itemIndex].alt : "";
-        if (front) img.removeAttribute("aria-hidden");
-        else img.setAttribute("aria-hidden", "true");
-      });
       const project = projects[index];
+      main.src = project.image;
+      main.alt = project.alt;
+      prevImg.src = projects[prev].image;
+      nextImg.src = projects[next].image;
       caption.querySelector("strong").textContent = project.caption;
       caption.querySelector("p").textContent = project.text;
-      caption.querySelector("span").textContent = project.place;
+      caption.querySelector("span").textContent = String(index + 1).padStart(2, "0") + " / " + String(count).padStart(2, "0");
     }
 
     stage.querySelector(".stage-prev").addEventListener("click", function () {
-      index = (index - 1 + count) % count;
+      index = (index - 1 + projects.length) % projects.length;
       render();
     });
     stage.querySelector(".stage-next").addEventListener("click", function () {
-      index = (index + 1) % count;
+      index = (index + 1) % projects.length;
       render();
     });
-    stage.addEventListener("animationend", function (event) {
-      if (event.animationName === "sheet-fan") stage.classList.add("is-ready");
+    render();
+  });
+
+  document.querySelectorAll("[data-gallery]").forEach(function (list) {
+    const perPage = Number(list.getAttribute("data-per-page")) || 5;
+    const rows = Array.prototype.slice.call(list.querySelectorAll(".gallery-row"));
+    const pager = list.parentElement.querySelector(".gallery-pager");
+    if (!pager || !rows.length) return;
+    const pages = Math.ceil(rows.length / perPage);
+    let page = 0;
+
+    function show(nextPage, scroll) {
+      page = nextPage;
+      rows.forEach(function (row, index) {
+        const onPage = Math.floor(index / perPage) === page;
+        row.hidden = !onPage;
+      });
+      Array.prototype.forEach.call(pager.querySelectorAll("button"), function (button) {
+        const value = button.getAttribute("data-page");
+        if (value === "prev") button.disabled = page === 0;
+        else if (value === "next") button.disabled = page === pages - 1;
+        else if (value !== null) {
+          const current = Number(value) === page;
+          if (current) button.setAttribute("aria-current", "page");
+          else button.removeAttribute("aria-current");
+        }
+      });
+      if (scroll) list.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    const prev = document.createElement("button");
+    prev.type = "button";
+    prev.setAttribute("data-page", "prev");
+    prev.textContent = "Previous";
+    prev.addEventListener("click", function () {
+      if (page > 0) show(page - 1, true);
     });
+    pager.appendChild(prev);
 
-    if (reduceMotion) {
-      stage.classList.add("is-settled");
-      return;
+    for (let i = 0; i < pages; i += 1) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.setAttribute("data-page", String(i));
+      button.textContent = String(i + 1);
+      button.setAttribute("aria-label", "Page " + (i + 1));
+      button.addEventListener("click", function () {
+        show(i, true);
+      });
+      pager.appendChild(button);
     }
 
-    function onScroll() {
-      const rect = stage.getBoundingClientRect();
-      const visible = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
-      const inView = visible >= 180;
-      const gone = rect.bottom < 0 || rect.top > window.innerHeight;
-      if (inView) stage.classList.add("is-settled");
-      else if (gone) stage.classList.remove("is-settled");
-    }
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    const next = document.createElement("button");
+    next.type = "button";
+    next.setAttribute("data-page", "next");
+    next.textContent = "Next";
+    next.addEventListener("click", function () {
+      if (page < pages - 1) show(page + 1, true);
+    });
+    pager.appendChild(next);
+    show(0, false);
   });
 
   document.querySelectorAll("[data-quote]").forEach(function (form) {
