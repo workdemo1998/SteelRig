@@ -257,6 +257,29 @@
     show(0, false);
   });
 
+  const galleryPhotos = document.querySelectorAll("[data-gallery] .gallery-open");
+  if (galleryPhotos.length && window.HTMLDialogElement) {
+    const dialog = document.createElement("dialog");
+    dialog.className = "lightbox";
+    dialog.innerHTML = '<div class="lightbox-frame"><button type="button" class="lightbox-close" aria-label="Close"><span aria-hidden="true">&times;</span></button><img alt=""></div>';
+    document.body.appendChild(dialog);
+    const view = dialog.querySelector("img");
+    dialog.querySelector(".lightbox-close").addEventListener("click", function () {
+      dialog.close();
+    });
+    dialog.addEventListener("click", function (event) {
+      if (event.target === dialog) dialog.close();
+    });
+    galleryPhotos.forEach(function (button) {
+      button.addEventListener("click", function () {
+        const source = button.querySelector("img");
+        view.src = source.currentSrc || source.src;
+        view.alt = source.alt;
+        dialog.showModal();
+      });
+    });
+  }
+
   document.querySelectorAll("[data-quote]").forEach(function (form) {
     const select = form.querySelector('[name="job"]');
     const requested = new URLSearchParams(window.location.search).get("job");
