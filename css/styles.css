@@ -432,12 +432,14 @@ a {
 
 body.home .site-header {
   background: transparent;
+  border-top-color: transparent;
   border-bottom-color: transparent;
   backdrop-filter: none;
 }
 
 body.home .site-header:not(.is-solid) .nav a {
   color: var(--off);
+  text-shadow: 0 1px 8px rgba(13, 34, 56, 0.55);
 }
 
 body.home .site-header:not(.is-solid) .nav-toggle span,
@@ -456,6 +458,10 @@ body.home .ticker {
   z-index: 41;
 }
 
+body.home .ticker-group span {
+  text-shadow: 0 1px 8px rgba(13, 34, 56, 0.7);
+}
+
 body.home.nav-open .ticker {
   background: var(--navy);
 }
@@ -471,6 +477,7 @@ body.home .hero-content {
 
 body.home .site-header.is-solid {
   background: rgba(247, 248, 246, 0.94);
+  border-top-color: var(--amber);
   border-bottom-color: var(--line);
   backdrop-filter: blur(16px);
 }
