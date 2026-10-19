@@ -9,11 +9,7 @@ const site = {
   phoneTel: "+447858304518",
   whatsapp: "https://wa.me/447858304518",
   email: "info@steelrig.co.uk",
-  address: "12 Harris Avenue, Cardiff, CF3 1QE",
-  street: "12 Harris Avenue",
-  locality: "Cardiff",
-  postcode: "CF3 1QE",
-  mapsUrl: "https://maps.google.com/?q=12+Harris+Avenue,+Cardiff,+CF3+1QE",
+  address: "Cardiff, Penarth, Caerphilly, Risca, Newport, and the surrounding areas.",
   url: "https://www.steelrig.co.uk",
 };
 
@@ -228,6 +224,7 @@ function footer(depth) {
         </div>
         <div class="wrap footer-base"><p>© ${year} SteelRig. Scaffold hire across South Wales.</p></div>
         <a class="footer-brand" href="${href(depth, "/")}" aria-label="SteelRig">${wordmark(depth, "footer-mark", "footer-steel", "footer-rig")}</a>
+        <p class="footer-pledge"><span>Your project.</span><span>Your safety.</span><span>Our commitment.</span></p>
       </footer>
       <div class="callbar">
         <a href="tel:${site.phoneTel}">Call</a>
@@ -297,7 +294,7 @@ function page({ file, title, description, section, main, jsonLd = "", extraHead 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${href(depth, "css/styles.css")}?v=19">
+    <link rel="stylesheet" href="${href(depth, "css/styles.css")}?v=24">
     ${extraHead}
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZKGT607PK"></script>
@@ -319,7 +316,7 @@ function page({ file, title, description, section, main, jsonLd = "", extraHead 
     </main>
     ${footer(depth)}
     ${extraScript}
-    <script src="${href(depth, "js/site.js")}?v=5"></script>
+    <script src="${href(depth, "js/site.js")}?v=6"></script>
   </body>
 </html>
 `;
@@ -337,14 +334,7 @@ function home() {
     image: `${site.url}/images/project-front.jpg`,
     telephone: site.phoneTel,
     email: site.email,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: site.street,
-      addressLocality: site.locality,
-      postalCode: site.postcode,
-      addressCountry: "GB",
-    },
-    areaServed: "South Wales",
+    areaServed: site.address,
     description: "Domestic scaffold hire in Cardiff, Caerphilly, Risca, Rogerstone, Newport and the surrounding areas.",
   };
   const jobsHtml = jobs
@@ -532,8 +522,22 @@ function areaPages() {
     extraHead: `<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">`,
     extraScript: `<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="${href(1, "js/coverage-map.js")}?v=2"></script>`,
-    main: `${hero({ kicker: "Areas", accent: "South Wales", title: "Scaffolding across Cardiff and beyond.", lede: "Based at 12 Harris Avenue, Cardiff, and working through the Vale, Newport and the valleys." })}
-      <section class="section"><div class="wrap"><div id="coverage-map" class="coverage-map" role="region" aria-label="Map of towns we cover"></div><script type="application/json" id="coverage-towns">${coverage}</script></div></section>`,
+    main: `${hero({ kicker: "Areas", accent: "South Wales", title: "Scaffolding across Cardiff and beyond.", lede: site.address })}
+      <section class="section locations-copy" aria-labelledby="locations-copy-title">
+        <div class="wrap">
+          <h2 id="locations-copy-title">Domestic Scaffolding Services You Can Rely On</h2>
+          <div class="stack">
+            <p>If you are a homeowner looking for reliable domestic scaffolding services for a roof replacement, roof repair, property renovation or general maintenance, we provide professional scaffolding solutions tailored to your needs. From domestic scaffold installations to specialist roof access scaffold, we help homeowners and tradespeople access hard-to-reach areas safely and efficiently.</p>
+            <p>Our experienced scaffolding team delivers high-quality scaffold erection, installation and dismantling services, with solutions designed around the requirements of each property and project. Whether you need a narrow access scaffold for a restricted space, a roof access scaffold for roofing repairs, or scaffold towers and temporary structures for more complex work, we aim to provide a reliable, professional service from start to finish.</p>
+            <p>We pride ourselves on quality workmanship, careful planning and attention to detail. Every project is approached with a focus on safety, stability and suitability for the work being carried out. From small domestic jobs to larger residential projects, our team works closely with homeowners, roofers, builders and other trades to deliver practical scaffolding solutions that keep projects moving.</p>
+            <p>Our services include domestic scaffold, roof access scaffold, narrow access scaffold, scaffold towers and temporary scaffolding structures, providing flexible access solutions for roof repairs, chimney work, extensions, repointing, exterior decorating and property renovations. We understand that every property presents different challenges, which is why we tailor our scaffolding arrangements to the site, access requirements and scope of work.</p>
+            <p>Whether you are planning a home improvement project or require scaffolding for essential roof maintenance, our dedicated team is here to help. We are committed to dependable service, professional scaffold erection and dismantling, and customer satisfaction at every stage of your project.</p>
+            <p><strong>Areas covered:</strong> We provide domestic scaffolding services across South Wales, including: Cardiff, Barry, Caerphilly, Newport, Dinas Powys, Taff's Well, Rogerstone, Bedwas, Abertridwr and Senghenydd, Church Village, Pontyclun, Llanbradach, Beddau, Ystrad Mynach, Llantrisant, Talbot Green, Llanharan and Brynna, Cwmbran, Caerleon, Pencoed, Llanharry, Abercynon, Nelson, Bargoed, Pontllanfraith, Newbridge, Abercarn, Risca, Treharris, Oakdale.</p>
+            <p>Contact our team to discuss your project and <a href="${href(1, "contact/")}">request a scaffolding quotation</a>.</p>
+          </div>
+        </div>
+      </section>
+      <section class="section" style="padding-top:0"><div class="wrap"><div id="coverage-map" class="coverage-map" role="region" aria-label="Map of towns we cover"></div><script type="application/json" id="coverage-towns">${coverage}</script></div></section>`,
   });
 
   for (const area of areas) {
@@ -574,7 +578,7 @@ function otherPages() {
       const flip = index % 3 % 2 === 1 ? " gallery-row-flip" : "";
       const hidden = index >= 3 ? " hidden" : "";
       const loading = index < 3 ? "eager" : "lazy";
-      return `<article class="gallery-row${flip}"${hidden}><figure class="gallery-photo"><img src="../${project.image}" alt="${esc(project.alt)}" loading="${loading}"></figure><div class="gallery-copy"><p class="kicker"><span>${esc(project.kicker)}</span></p><h2>${esc(project.caption)}</h2><p>${esc(project.text)}</p></div></article>`;
+      return `<article class="gallery-row${flip}"${hidden}><figure class="gallery-photo"><button type="button" class="gallery-open" aria-label="View larger photo: ${esc(project.caption)}"><img src="../${project.image}" alt="${esc(project.alt)}" loading="${loading}"></button></figure><div class="gallery-copy"><p class="kicker"><span>${esc(project.kicker)}</span></p><h2>${esc(project.caption)}</h2><p>${esc(project.text)}</p></div></article>`;
     })
     .join("");
   page({
@@ -603,15 +607,49 @@ function otherPages() {
 
   page({
     file: "about/index.html",
-    title: "About SteelRig | Scaffolding in Cardiff and South Wales",
-    description: "SteelRig is a CISRS-accredited scaffolding company based in Cardiff, covering South Wales.",
+    title: "About SteelRig | Trusted scaffolding across South Wales",
+    description: "Locally owned scaffolding across South Wales. Domestic scaffold, roof access, narrow access, and towers and temporary structures.",
     section: "about",
-    main: `${hero({ kicker: "About", accent: "SteelRig", title: "Scaffold hire from Cardiff, across South Wales.", lede: "A local team for domestic projects and the awkward sites that need a proper look first." })}
-      <section class="section"><div class="wrap" style="display:grid;gap:1rem;max-width:46rem">
-        <p>SteelRig is a trusted scaffolding company serving Cardiff, Barry, Caerphilly, Newport and communities throughout South Wales. From domestic projects such as loft conversions and home extensions to temporary structures and demanding specialist contracts, we provide reliable scaffolding.</p>
-        <p>Our experienced, CISRS-accredited team is equipped to handle challenging sites and specialist structures. Whatever the scale or complexity of the job, SteelRig delivers safe, dependable access and professional scaffolding, with a strong focus on quality, safety and reliability across Cardiff and beyond.</p>
-        <p>We are based at ${esc(site.address)}. Call ${esc(site.phoneDisplay)} or send the quote form and we will arrange a survey.</p>
-        <p><a class="btn btn-navy" href="../areas/">Towns we cover</a></p>
+    main: `${hero({ kicker: "About", accent: "South Wales", title: "Trusted Scaffolding Services Across South Wales" })}
+      <section class="section about-copy"><div class="wrap">
+        <div class="stack">
+          <p>We're a locally owned and operated scaffolding company providing safe, reliable and professional scaffolding solutions across South Wales. With a strong commitment to quality workmanship, safety and customer satisfaction, we support homeowners, contractors and businesses with scaffolding services tailored to their project requirements.</p>
+          <p>We specialise in <strong>domestic scaffold</strong>, <strong>roof access scaffold</strong>, <strong>narrow access scaffold</strong>, and <strong>towers and temporary structures scaffold</strong>, providing practical access solutions for roofing repairs, property renovations, extensions, maintenance work and construction projects. Whether you need scaffolding for a small domestic property or a more complex project, our team works hard to deliver a safe, secure and efficient service from start to finish.</p>
+          <p>Our experienced team understands that every property and project is different. That's why we focus on clear communication, dependable scheduling and carefully planned scaffolding installations. We take safety seriously, follow relevant industry standards and aim to minimise disruption to your home or business throughout the process.</p>
+          <p>We proudly provide scaffolding services throughout South Wales, including Cardiff, Barry, Caerphilly, Newport, Dinas Powys, Taff's Well, Rogerstone, Bedwas, Abertridwr, Senghenydd, Church Village, Pontyclun, Llanbradach, Beddau, Ystrad Mynach, Llantrisant, Talbot Green, Llanharan, Brynna, Cwmbran, Caerleon, Pencoed, Llanharry, Abercynon, Nelson, Bargoed, Pontllanfraith, Newbridge, Abercarn, Risca, Treharris and Oakdale.</p>
+          <p>At our company, we believe that professional scaffolding is about more than simply providing access. It's about delivering peace of mind, maintaining high safety standards and giving every customer a service they can rely on.</p>
+        </div>
+        <h2>Scaffolding Services You Can Count On</h2>
+        <div class="about-points">
+          <article>
+            <p class="kicker"><span>01</span></p>
+            <h3>Safety and Insurance</h3>
+            <p>We prioritise the safety of our customers, their properties and our team. Our scaffolding services are planned and delivered with a strong focus on safe working practices, suitable access and compliance with applicable regulations.</p>
+          </article>
+          <article>
+            <p class="kicker"><span>02</span></p>
+            <h3>Professional Service</h3>
+            <p>From your initial enquiry to the completion of your project, we aim to provide a professional, organised and reliable service. We work closely with homeowners, roofers, builders and contractors to understand their access requirements and provide suitable scaffolding solutions.</p>
+          </article>
+          <article>
+            <p class="kicker"><span>03</span></p>
+            <h3>Hassle-Free Scaffolding</h3>
+            <p>We understand that building work can be disruptive. Our goal is to make the scaffolding process as straightforward as possible, with clear communication, dependable arrangements and an efficient approach to installation and dismantling.</p>
+          </article>
+          <article>
+            <p class="kicker"><span>04</span></p>
+            <h3>Solutions for Every Project</h3>
+            <p>Whether you require domestic scaffold for home improvements, roof access scaffold for repairs, narrow access scaffold for restricted spaces, or towers and temporary structures scaffold for more complex work, we aim to provide a solution suited to your property, project and access needs.</p>
+          </article>
+        </div>
+        <h2>Our Commitment to You</h2>
+        <div class="stack">
+          <p>We believe every customer deserves dependable service, quality workmanship and attention to detail. That's why we approach every scaffolding project with the same care and consideration we would expect for our own properties.</p>
+          <p>From small residential jobs to larger construction projects, our focus remains the same: providing safe access, communicating clearly and delivering a service you can depend on.</p>
+          <p>When you choose us for scaffolding in South Wales, you can expect a team committed to making your project safer, smoother and more straightforward from beginning to end.</p>
+          <p class="about-signoff">Your project. Your safety. Our commitment.</p>
+          <p><a class="btn btn-navy" href="../contact/">Get a quote</a></p>
+        </div>
       </div></section>`,
   });
 
@@ -638,13 +676,13 @@ function otherPages() {
   page({
     file: "contact/index.html",
     title: "Contact SteelRig | Free scaffold quote",
-    description: `Call SteelRig on ${site.phoneDisplay} or request a free scaffold quote. Based at ${site.address}.`,
+    description: `Call SteelRig on ${site.phoneDisplay} or request a free scaffold quote. Covering ${site.address}`,
     section: "contact",
     main: `${hero({ kicker: "Contact", accent: "Free quote", title: "Get your free, no-obligation quote today.", lede: "Cost-effective and reliable scaffolding across Cardiff, Pontyclun, Bargoed and Rogerstone." })}
       <section class="section"><div class="wrap contact-grid">
         <div>
           <div class="phone-row"><a class="phone-link" href="tel:${site.phoneTel}">${esc(site.phoneDisplay)}</a></div>
-          <div class="contact-meta"><a href="mailto:${site.email}">${esc(site.email)}</a><a href="${esc(site.mapsUrl)}">${esc(site.address)}</a></div>
+          <div class="contact-meta"><a href="mailto:${site.email}">${esc(site.email)}</a><span>${esc(site.address)}</span></div>
           <div class="faq" style="margin-top:2rem">${faqHtml}</div>
         </div>
         ${quoteForm("contact")}
