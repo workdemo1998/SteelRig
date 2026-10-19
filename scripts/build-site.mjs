@@ -268,7 +268,7 @@ function pageUrl(file) {
   return "https://www.steelrig.co.uk/" + file.replace(/index\.html$/, "");
 }
 
-function page({ file, title, description, section, main, jsonLd = "", extraHead = "", extraScript = "" }) {
+function page({ file, title, description, section, main, jsonLd = "", extraHead = "", extraScript = "", bodyClass = "" }) {
   const depth = file === "index.html" || file === "404.html" ? 0 : file.split("/").filter(Boolean).length - 1;
   const url = pageUrl(file);
   const html = `<!DOCTYPE html>
@@ -294,7 +294,7 @@ function page({ file, title, description, section, main, jsonLd = "", extraHead 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${href(depth, "css/styles.css")}?v=24">
+    <link rel="stylesheet" href="${href(depth, "css/styles.css")}?v=25">
     ${extraHead}
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZKGT607PK"></script>
@@ -307,7 +307,7 @@ function page({ file, title, description, section, main, jsonLd = "", extraHead 
     </script>
     ${jsonLd}
   </head>
-  <body>
+  <body${bodyClass ? ` class="${esc(bodyClass)}"` : ""}>
     <a class="skip" href="#main">Skip to content</a>
     ${ticker()}
     ${header(depth, section)}
@@ -367,6 +367,7 @@ function home() {
     title: "SteelRig | Domestic scaffold hire in Cardiff",
     description: "Domestic scaffold hire in Cardiff, Caerphilly, Risca, Rogerstone, Newport and South Wales. CISRS-accredited team. Free, no-obligation quotes.",
     section: "",
+    bodyClass: "home",
     jsonLd: `<script type="application/ld+json">${JSON.stringify(schema)}</script>`,
     main: `<section class="hero">
         <video class="hero-media" src="${href(0, "video/scaffold.mp4")}?v=2" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
